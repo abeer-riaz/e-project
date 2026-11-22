@@ -633,58 +633,42 @@
 
 <script src="./bootstrap js/bootstrap.js"></script>
 <script>
-    function showAlert() {
-        alert("Please fill out the contact form first!");
-    }
 
 function searchSection(event) {
-    event.preventDefault();
+  event.preventDefault();
 
-    let search = document.getElementById("searchInput").value.toLowerCase().trim();
+  let search = document.getElementById("searchInput").value.toLowerCase().trim();
 
-    let links = document.querySelectorAll(".navbar-nav .nav-link");
+  if (search === "") {
+    alert("Please fill the search field first");
+    return;
+  }
 
-    let found = false;
+  let links = document.querySelectorAll(".navbar .nav-link");
+  let found = false;
 
-    links.forEach(link => {
+  links.forEach(link => {
+    let name = link.innerText.toLowerCase();
+    let href = link.getAttribute("href");
 
-        let name = link.innerText.toLowerCase();
-
-        if (name.includes(search) && search !== "") {
-
-            let href = link.getAttribute("href");
-
-            if (href.startsWith("#")) {
-                let section = document.querySelector(href);
-
-                if (section) {
-                    section.scrollIntoView({
-                        behavior: "smooth"
-                    });
-                    found = true;
-                }
-            } 
-            else {
-                window.location.href = href;
-                found = true;
-            }
-        }
-    });
-
-    if (!found && search !== "") {
-        alert("No result found!");
+    if (name.includes(search) && href.startsWith("#")) {
+      let section = document.querySelector(href);
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth" });
+        found = true;
+      }
     }
+  });
+
+  if (!found) {
+    alert("No result found");
+  }
 }
 
-    function searchSection(event) {
-        event.preventDefault();
+function showAlert() {
+  alert("Fill out the contact form first");
+}
 
-        let searchValue = document.getElementById("searchInput").value;
-
-        if (searchValue.trim() === "") {
-            alert("Please fill in the search field first!");
-        }
-    }
 
 </script>
 
